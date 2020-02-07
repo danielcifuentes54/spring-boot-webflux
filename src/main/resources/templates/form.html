@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.com">
+<head>
+    <div th:replace="fragments/styles :: header"></div>
+    <meta charset="UTF-8">
+    <title th:text="${title}"></title>
+</head>
+<body>
+    <h1 th:text="${title}"></h1>
+    <div>
+        <a th:href="@{/list}">To return!</a>
+        <form th:action="@{/form}" method="post" th:object="${product}" enctype="multipart/form-data">
+            <!-- this option is used when I dont have the session attributes
+            <input th:if="${product.id} != null" type="hidden" th:field="*{id}">
+            <input th:if="${product.photo} != null" type="hidden" th:field="*{photo}">
+            -->
+            <div>
+                <label for="name">Name</label>
+                <div>
+                    <input type="text" th:field="*{name}">
+                </div>
+                <small th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
+            </div>
+
+            <div>
+                <label for="price">Price</label>
+                <div>
+                    <input type="number" th:field="*{price}">
+                </div>
+                <small th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></small>
+            </div>
+
+            <div>
+                <label for="createAt">Date</label>
+                <div>
+                    <input type="date" th:field="*{createAt}">
+                </div>
+            </div>
+
+            <div>
+                <label for="category.id">Category</label>
+                <div>
+                    <select th:field="*{category.id}">
+                        <option value="">-- Select Category--</option>
+                        <option th:each="category: ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+                    </select>
+                </div>
+                <small th:if="${#fields.hasErrors('category.id')}" th:errors="*{category.id}"></small>
+            </div>
+
+            <div>
+                <label for="file">Photo</label>
+                <div>
+                    <input type="file" name="file">
+                </div>
+            </div>
+
+            <div>
+                <div><input type="submit" th:value="${product.id == null} ? Create : Save"></div>
+            </div>
+        </form>
+    </div>
+    <div th:replace="fragments/styles :: assets"></div>
+</body>
+</html>

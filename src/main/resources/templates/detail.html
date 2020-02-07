@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.com">
+<head>
+    <div th:replace="fragments/styles :: header"></div>
+    <meta charset="UTF-8">
+    <title th:text="${title}"></title>
+</head>
+<body>
+    <h1 th:text="${title}"></h1>
+    <a th:href="@{/list}">To return!</a>
+
+    <div>
+        <img th:if="${product.photo != null && #strings.length(product.photo) > 0}"
+             style="max-width: 25%;"   th:src="@{/get/photo/} + ${product.photo}" th:alt="${product.name}">
+    </div>
+
+    <div>
+        <li th:text="'ID: ' + ${product.id}"></li>
+        <li th:text="'Name: ' + ${product.name}"></li>
+        <li th:text="'Price: ' + ${#numbers.formatCurrency(product.price)}"></li>
+        <li th:text="'Date: ' + ${product.createAt}"></li>
+    </div>
+
+    <div th:replace="fragments/styles :: assets"></div>
+
+</body>
+
+</html>
